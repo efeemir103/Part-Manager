@@ -169,7 +169,6 @@ public class ProjectView implements View {
             e3.printStackTrace();
             JOptionPane.showMessageDialog(window, "Project file is corrupted.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
     }
 
 }

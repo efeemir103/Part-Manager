@@ -1,12 +1,13 @@
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
+
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -14,6 +15,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MenuView implements View {
@@ -31,16 +34,14 @@ public class MenuView implements View {
         JLabel header = new JLabel("Welcome to Part Manager");
 		header.setHorizontalAlignment(JLabel.CENTER);
         header.setFont(header.getFont().deriveFont(32f));
-        header.setAlignmentX(Component.CENTER_ALIGNMENT);
         
         JList<String> projectList = new JList<>(projectModel);
-        projectList.setAlignmentX(Component.CENTER_ALIGNMENT);
+        projectList.setPreferredSize(new Dimension(400, 600));
         JButton openButton = new JButton("Open selected Project");
-        openButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         JButton createButton = new JButton("Create new Project");
-        createButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         JButton deleteButton = new JButton("Delete selected Project");
-        deleteButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JButton partButton = new JButton("Manage Parts");
+        JButton materialButton = new JButton("Manage Materials");
 
         openButton.addActionListener(e -> {
             String projectSelected = projectList.getSelectedValue();
@@ -83,17 +84,32 @@ public class MenuView implements View {
             }
         });
 
-        window.getContentPane().setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
-        window.getContentPane().add(Box.createRigidArea(new Dimension(0, 30)));
-        window.getContentPane().add(header);
-        window.getContentPane().add(Box.createRigidArea(new Dimension(0, 20)));
-        window.getContentPane().add(projectList);
-        window.getContentPane().add(Box.createRigidArea(new Dimension(0, 50)));
-        window.getContentPane().add(openButton);
-        window.getContentPane().add(Box.createRigidArea(new Dimension(0, 20)));
-        window.getContentPane().add(createButton);
-        window.getContentPane().add(Box.createRigidArea(new Dimension(0, 20)));
-        window.getContentPane().add(deleteButton);
+        partButton.addActionListener(e -> {
+            new PartLibraryView().run();
+            window.dispose();
+        });
+
+        materialButton.addActionListener(e -> {
+            new MaterialLibraryView().run();
+            window.dispose();
+        });
+
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        buttons.add(openButton);
+        buttons.add(createButton);
+        buttons.add(deleteButton);
+        buttons.add(partButton);
+        buttons.add(materialButton);
+
+        JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        panel.add(header);
+        panel.add(new JScrollPane(projectList));
+        panel.add(buttons);
+        panel.setLayout(new GridLayout(3, 1, 30, 30));
+
+        window.add(panel);
          
         // Set up window.
         window.setMinimumSize(new Dimension(900, 600));

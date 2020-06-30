@@ -45,6 +45,14 @@ public class Part implements Serializable {
         this.materials = materials;
     }
 
+    public void addMaterial(Material m, int quantity) {
+        materials.put(m, quantity);
+    }
+
+    public void removeMaterial(Material m) {
+        materials.remove(m);
+    }
+
     public double getCost() {
         double result = 0;
         for(Map.Entry<Material, Integer> entry: materials.entrySet()) {

@@ -14,6 +14,7 @@ public class AddPartView implements View {
     private JFrame window;
 
     public AddPartView() {
+        window = new JFrame();
         JLabel nameLabel = new JLabel("Enter name of the Part: ");
         JTextField nameField = new JTextField();
         JLabel imageLabel = new JLabel("Select a image (*.png) for Part: ");
@@ -46,7 +47,7 @@ public class AddPartView implements View {
 
     @Override
     public void run() {
-        
+        window.setVisible(true);
     }
     
 }

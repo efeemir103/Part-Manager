@@ -16,6 +16,7 @@ public class AddMaterialView implements View {
     private JFrame window;
 
     public AddMaterialView() {
+        window = new JFrame();
         JLabel nameLabel = new JLabel("Enter name of the Material: ");
         JTextField nameField = new JTextField();
         JLabel priceLabel = new JLabel("Enter unit price of the Material: ");
@@ -52,7 +53,7 @@ public class AddMaterialView implements View {
 
     @Override
     public void run() {
-
+        window.setVisible(true);
     }
 
 }
