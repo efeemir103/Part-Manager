@@ -6,12 +6,18 @@ public class Part implements Serializable {
     private static final long serialVersionUID = 6483218562224594755L;
     private String name;
     private String image;
-    private HashMap<Integer, Material> materials;
-    
-    public Part(int[] quantities, Material[] materialList) {
+    private HashMap<Material, Integer> materials;
+
+    public Part(String partName, String imageName) {
+        name = partName;
+        image = imageName;
+        materials = new HashMap<>();
+    }
+
+    public Part(Material[] materialList, int[] quantities) {
         materials = new HashMap<>();
         for(int i = 0; i < materialList.length; i++) {
-            materials.put(quantities[i], materialList[i]);
+            materials.put(materialList[i], quantities[i]);
         }
     }
 
@@ -31,18 +37,18 @@ public class Part implements Serializable {
         this.image = image;
     }
 
-    public HashMap<Integer, Material> getMaterials() {
+    public HashMap<Material, Integer> getMaterials() {
         return materials;
     }
     
-    public void setMaterials(HashMap<Integer, Material> materials) {
+    public void setMaterials(HashMap<Material, Integer> materials) {
         this.materials = materials;
     }
 
     public double getCost() {
         double result = 0;
-        for(Map.Entry<Integer, Material> entry: materials.entrySet()) {
-            result += entry.getKey()*entry.getValue().getPrice();
+        for(Map.Entry<Material, Integer> entry: materials.entrySet()) {
+            result += entry.getValue()*entry.getKey().getPrice();
         }
         return result;
     }

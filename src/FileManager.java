@@ -291,9 +291,9 @@ public class FileManager {
         File imageDestinationFile = new File("data/images/" + resourceClass + "s/" + name + ".png");
         
         BufferedImage inputImage = ImageIO.read(imageSourceFile);
-        BufferedImage outputImage = new BufferedImage(200, 200, inputImage.getType());
+        BufferedImage outputImage = new BufferedImage(50, 50, inputImage.getType());
         Graphics2D g2d = outputImage.createGraphics();
-        g2d.drawImage(inputImage, 0, 0, 200, 200, null);
+        g2d.drawImage(inputImage, 0, 0, 50, 50, null);
         g2d.dispose();
  
         // writes to output file
