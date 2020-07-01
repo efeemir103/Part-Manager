@@ -89,9 +89,9 @@ public class PartLibraryView implements View {
     @Override
     public void run() {
         try {
-            ArrayList<Material> materialsLoaded = FileManager.loadMaterials();
-            for(Material m: materialsLoaded) {
-                partModel.addElement(m.getName());
+            ArrayList<Part> materialsLoaded = FileManager.loadParts();
+            for(Part p: materialsLoaded) {
+                partModel.addElement(p.getName());
             }
         } catch (IOException e) {
             e.printStackTrace();

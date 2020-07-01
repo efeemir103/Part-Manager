@@ -58,7 +58,11 @@ public class Project implements Serializable {
     public double getCost() {
         double result = 0;
         for(Map.Entry<Part, Integer> entry: parts.entrySet()) {
-            result += entry.getValue()*entry.getKey().getCost();
+            double partCost = entry.getKey().getCost();
+            if(partCost == Double.MAX_VALUE) {
+                return Double.MAX_VALUE;
+            }
+            result += entry.getValue()*partCost;
         }
         return result;
     }

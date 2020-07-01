@@ -56,6 +56,9 @@ public class Part implements Serializable {
     public double getCost() {
         double result = 0;
         for(Map.Entry<Material, Integer> entry: materials.entrySet()) {
+            if(!entry.getKey().isInStock()) {
+                return Double.MAX_VALUE;
+            }
             result += entry.getValue()*entry.getKey().getPrice();
         }
         return result;

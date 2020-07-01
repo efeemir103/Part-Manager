@@ -1,3 +1,5 @@
+import java.util.Map;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -8,14 +10,17 @@ import java.awt.GridLayout;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 public class PartView implements View {
     private String name;
@@ -24,6 +29,7 @@ public class PartView implements View {
     private JLabel partMaterialCountLabel;
     private JLabel partCostLabel;
     private JFrame window;
+    private DefaultListModel<String> materialModel;
     private JComboBox<String> addOptions;
     private JComboBox<String> removeOptions;
     
@@ -58,7 +64,7 @@ public class PartView implements View {
         addDialog.setSize(200, 200);
         addDialog.add(new JLabel("Select an option:"));
         addOptions = new JComboBox<>();
-        addDialog.add(addOptions);
+        addDialog.add(new JScrollPane(addOptions));
         JButton addConfirm = new JButton("Confirm");
         
         addConfirm.addActionListener(e -> {
@@ -68,6 +74,8 @@ public class PartView implements View {
                 try {
                     part.addMaterial(FileManager.loadMaterial(selectedOption), q);
                     FileManager.savePart(part);
+                    run();
+                    addDialog.dispose();
                 } catch(FileNotFoundException error1) {
                     error1.printStackTrace();
                     JOptionPane.showMessageDialog(window, "Part file couldn't be found.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -90,6 +98,7 @@ public class PartView implements View {
         removeDialog.add(new JLabel("Select an option:"));
         removeDialog.setSize(200, 200);
         removeOptions = new JComboBox<>();
+        removeDialog.add(new JScrollPane(removeOptions));
         JButton removeConfirm = new JButton("Confirm");
 
         removeConfirm.addActionListener(e -> {
@@ -98,6 +107,8 @@ public class PartView implements View {
                 try {
                     part.removeMaterial(FileManager.loadMaterial(selectedOption));
                     FileManager.savePart(part);
+                    run();
+                    removeDialog.dispose();
                 } catch(FileNotFoundException error1) {
                     error1.printStackTrace();
                     JOptionPane.showMessageDialog(window, "Part file couldn't be found.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -121,9 +132,14 @@ public class PartView implements View {
             removeDialog.setVisible(true);
         });
 
+        materialModel = new DefaultListModel<>();
+        JList<String> materialsList = new JList<>(materialModel);
+
         window.getContentPane().setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
         window.getContentPane().add(Box.createRigidArea(new Dimension(0, 10)));
         window.getContentPane().add(partInfo);
+        window.getContentPane().add(Box.createRigidArea(new Dimension(0, 10)));
+        window.getContentPane().add(new JScrollPane(materialsList));
         window.getContentPane().add(Box.createRigidArea(new Dimension(0, 10)));
         window.getContentPane().add(addPartButton);
         window.getContentPane().add(Box.createRigidArea(new Dimension(0, 10)));
@@ -139,7 +155,6 @@ public class PartView implements View {
             @Override
     	    public void windowClosing(WindowEvent e) {
                 window.dispose();
-                System.exit(0);
     	    }
     	});
     }
@@ -150,11 +165,19 @@ public class PartView implements View {
             part = FileManager.loadPart(name);
             partLabel.setText("Part: " + name);
             partMaterialCountLabel.setText("Total Number of Materials: " + part.getMaterials().size());
-            partCostLabel.setText("Part Unit Cost: " + part.getCost());
+            double cost = part.getCost();
+            partCostLabel.setText(cost == Double.MAX_VALUE ? "Part contains materials out of stock.": "Part Unit Cost: " + cost);
             partLabel.setIcon(new ImageIcon(part.getImage()));
+            materialModel.clear();
+            for(Map.Entry<Material, Integer> entry: part.getMaterials().entrySet()) {
+                double temp = entry.getKey().getPrice();
+                materialModel.addElement(entry.getKey().getName() + " - " + (temp == Double.MAX_VALUE ? "Not in stock": "Quantity: " + entry.getValue() + " Unit Price: " + temp));
+            }
+            addOptions.removeAllItems();
             for(Material m: FileManager.loadMaterials()) {
                 addOptions.addItem(m.getName());
             }
+            removeOptions.removeAllItems();
             for(Material m: part.getMaterials().keySet()) {
                 removeOptions.addItem(m.getName());
             }

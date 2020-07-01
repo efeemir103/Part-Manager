@@ -63,7 +63,7 @@ public class FileManager {
     static void addNewProject(Project p) throws IOException{
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("data/projects.dat", true));
 
-        bufferedWriter.write(p.getName());
+        bufferedWriter.write(p.getName() + "\n");
 
         bufferedWriter.close();
         
@@ -153,7 +153,7 @@ public class FileManager {
     static void addNewPart(Part p) throws IOException{
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("data/parts.dat", true));
 
-        bufferedWriter.write(p.getName());
+        bufferedWriter.write(p.getName() + "\n");
 
         bufferedWriter.close();
         
@@ -243,7 +243,7 @@ public class FileManager {
     static void addNewMaterial(Material m) throws IOException{
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("data/materials.dat", true));
 
-        bufferedWriter.write(m.getName());
+        bufferedWriter.write(m.getName() + "\n");
 
         bufferedWriter.close();
         

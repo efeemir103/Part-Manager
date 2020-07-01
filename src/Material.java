@@ -7,10 +7,11 @@ public class Material implements Serializable {
     private String image;
     private boolean inStock;
     
-    public Material(String name, double price, String image) {
+    public Material(String name, double price, String image, boolean inStock) {
         this.name = name;
         this.price = price;
         this.image = image;
+        this.inStock = inStock;
     }
 
     public String getName() {

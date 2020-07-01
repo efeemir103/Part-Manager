@@ -131,6 +131,7 @@ public class MenuView implements View {
     public void run() {
         try {
             ArrayList<Project> projectsLoaded = FileManager.loadProjects();
+            projectModel.clear();
             for(Project p: projectsLoaded) {
                 projectModel.addElement(p.getName());
             }
