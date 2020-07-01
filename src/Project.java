@@ -14,15 +14,6 @@ public class Project implements Serializable {
         parts = new HashMap<>();
     }
 
-    public Project(String projectName, String imageName, int[] quantities, Part[] partList) {
-        name = projectName;
-        image = imageName;
-        parts = new HashMap<>();
-        for(int i = 0; i < partList.length; i++) {
-            parts.put(partList[i], quantities[i]);
-        }
-    }
-
     public String getName() {
         return name;
     }

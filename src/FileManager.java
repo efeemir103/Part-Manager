@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 public class FileManager {
-    static ArrayList<Project> loadProjects() throws IOException {
+    public static ArrayList<Project> loadProjects() throws IOException {
         ArrayList<Project> projects = new ArrayList<>();
         
         // Check if file containing lists of projects exist.
@@ -44,7 +44,7 @@ public class FileManager {
         return projects;
     }
     
-    static Project loadProject(String name) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static Project loadProject(String name) throws FileNotFoundException, IOException, ClassNotFoundException {
         Project p;
 
         // Check if file containing lists of projects exist.
@@ -60,7 +60,7 @@ public class FileManager {
         return p;
     }
 
-    static void addNewProject(Project p) throws IOException{
+    public static void addNewProject(Project p) throws IOException{
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("data/projects.dat", true));
 
         bufferedWriter.write(p.getName() + "\n");
@@ -70,7 +70,7 @@ public class FileManager {
         saveProject(p);
     }
 
-    static void saveProject(Project p) throws IOException{
+    public static void saveProject(Project p) throws IOException{
         FileOutputStream projectFile = new FileOutputStream("data/projects/" + p.getName() + ".bin");
         ObjectOutputStream oStream = new ObjectOutputStream(projectFile);
         oStream.writeObject(p);
@@ -78,7 +78,7 @@ public class FileManager {
         projectFile.close();
     }
 
-    static void deleteProject(String name) throws IOException {
+    public static void deleteProject(String name) throws IOException {
         File projectFile = new File("data/projects/" + name + ".bin");
         projectFile.delete();
 
@@ -106,7 +106,7 @@ public class FileManager {
         temp.renameTo(projectsFile);
     }
 
-    static ArrayList<Part> loadParts() throws IOException {
+    public static ArrayList<Part> loadParts() throws IOException {
         ArrayList<Part> parts = new ArrayList<>();
         
         // Check if file containing lists of projects exist.
@@ -134,7 +134,7 @@ public class FileManager {
         return parts;
     }
 
-    static Part loadPart(String name) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static Part loadPart(String name) throws FileNotFoundException, IOException, ClassNotFoundException {
         Part p;
 
         // Check if file containing lists of projects exist.
@@ -150,7 +150,7 @@ public class FileManager {
         return p;
     }
 
-    static void addNewPart(Part p) throws IOException{
+    public static void addNewPart(Part p) throws IOException{
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("data/parts.dat", true));
 
         bufferedWriter.write(p.getName() + "\n");
@@ -160,7 +160,7 @@ public class FileManager {
         savePart(p);
     }
 
-    static void savePart(Part p) throws IOException{
+    public static void savePart(Part p) throws IOException{
         FileOutputStream partFile = new FileOutputStream("data/parts/" + p.getName() + ".bin");
         ObjectOutputStream oStream = new ObjectOutputStream(partFile);
         oStream.writeObject(p);
@@ -168,7 +168,7 @@ public class FileManager {
         partFile.close();
     }
 
-    static void deletePart(String name) throws IOException {
+    public static void deletePart(String name) throws IOException {
         File partFile = new File("data/parts/" + name + ".bin");
         partFile.delete();
 
@@ -196,7 +196,7 @@ public class FileManager {
         temp.renameTo(partsFile);
     }
 
-    static ArrayList<Material> loadMaterials() throws IOException {
+    public static ArrayList<Material> loadMaterials() throws IOException {
         ArrayList<Material> materials = new ArrayList<>();
         
         // Check if file containing lists of projects exist.
@@ -224,7 +224,7 @@ public class FileManager {
         return materials;
     }
 
-    static Material loadMaterial(String name) throws FileNotFoundException, IOException, ClassNotFoundException {
+    public static Material loadMaterial(String name) throws FileNotFoundException, IOException, ClassNotFoundException {
         Material p;
 
         // Check if file containing lists of projects exist.
@@ -240,7 +240,7 @@ public class FileManager {
         return p;
     }
 
-    static void addNewMaterial(Material m) throws IOException{
+    public static void addNewMaterial(Material m) throws IOException{
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("data/materials.dat", true));
 
         bufferedWriter.write(m.getName() + "\n");
@@ -250,7 +250,7 @@ public class FileManager {
         saveMaterial(m);
     }
 
-    static void saveMaterial(Material m) throws IOException{
+    public static void saveMaterial(Material m) throws IOException{
         FileOutputStream materialFile = new FileOutputStream("data/materials/" + m.getName() + ".bin");
         ObjectOutputStream oStream = new ObjectOutputStream(materialFile);
         oStream.writeObject(m);
@@ -258,7 +258,7 @@ public class FileManager {
         materialFile.close();
     }
 
-    static void deleteMaterial(String name) throws IOException {
+    public static void deleteMaterial(String name) throws IOException {
         File materialFile = new File("data/materials/" + name + ".bin");
         materialFile.delete();
 
@@ -286,7 +286,7 @@ public class FileManager {
         temp.renameTo(materialsFile);
     }
 
-    static String getImageResource(String absolutePath, String name, String resourceClass) throws IOException {
+    public static String getImageResource(String absolutePath, String name, String resourceClass) throws IOException {
         File imageSourceFile = new File(absolutePath);
         File imageDestinationFile = new File("data/images/" + resourceClass + "s/" + name + ".png");
         

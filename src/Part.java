@@ -14,13 +14,6 @@ public class Part implements Serializable {
         materials = new HashMap<>();
     }
 
-    public Part(Material[] materialList, int[] quantities) {
-        materials = new HashMap<>();
-        for(int i = 0; i < materialList.length; i++) {
-            materials.put(materialList[i], quantities[i]);
-        }
-    }
-
     public String getName() {
         return name;
     }
