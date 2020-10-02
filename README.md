@@ -1,6 +1,15 @@
-## Getting Started
+# Part-Manager
+A simple parts & materials management app written in Java with Swing API.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+
+![MenuView](./outputs/MenuView.png)
+![MenuView](./outputs/ProjectView.png)
+
+For more check the output folder...
+
+### Project Structure
+
+![uml-diagram-pic](./UML%20Diagram.png)
 
 ## Folder Structure
 
